@@ -20,12 +20,12 @@ La ville de Seattle vise la neutralité carbone en 2050. Les relevés de consomm
 ```
 .
 ├── data/
-│   └── 2016_Building_Energy_Benchmarking.csv
+│   ├── 2016_Building_Energy_Benchmarking.csv     # données brutes
+│   └── building_consumption_clean.csv            # jeu nettoyé (export du notebook 01)
 ├── notebooks/
 │   ├── template_modelistation_supervisee.ipynb   # template fourni (non modifié)
-│   └── analyse_consommation_batiments.ipynb      # notebook du projet
-├── quiz_*.py                                     # scripts des quiz du cours
-├── fiche_revision_machine_learning.md            # fiche de révision du cours
+│   ├── 01_analyse_exploratoire.ipynb             # analyse exploratoire et nettoyage
+│   └── 02_modelisation.ipynb                     # feature engineering et modélisation
 ├── requirements.txt
 └── README.md
 ```
@@ -40,12 +40,14 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Ouvrir ensuite `notebooks/analyse_consommation_batiments.ipynb` (VS Code ou Jupyter) et exécuter les cellules dans l'ordre.
+Exécuter ensuite, dans l'ordre, `notebooks/01_analyse_exploratoire.ipynb` (qui exporte le jeu nettoyé) puis `notebooks/02_modelisation.ipynb`
+(VS Code ou Jupyter, noyau `.venv`).
 
 ## Avancement
 
 - [x] Analyse exploratoire
-- [ ] Feature engineering et préparation des features
+- [x] Feature engineering
+- [ ] Préparation des features
 - [ ] Comparaison des modèles
 - [ ] Optimisation et interprétation
 - [ ] API et déploiement cloud
