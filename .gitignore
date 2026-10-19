@@ -13,8 +13,10 @@ env/
 # Secrets
 .env
 
-# Supports de cours OpenClassrooms
+# Supports de cours OpenClassrooms et travail personnel (quiz, fiches)
 *.pdf
+quiz_*.py
+fiche_revision_*.md
 
 # Éditeurs / OS
 .vscode/

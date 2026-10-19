@@ -26,8 +26,6 @@ La ville de Seattle vise la neutralité carbone en 2050. Les relevés de consomm
 │   ├── template_modelistation_supervisee.ipynb   # template fourni (non modifié)
 │   ├── 01_analyse_exploratoire.ipynb             # analyse exploratoire et nettoyage
 │   └── 02_modelisation.ipynb                     # feature engineering et modélisation
-├── quiz_*.py                                     # scripts des quiz du cours
-├── fiche_revision_machine_learning.md            # fiche de révision du cours
 ├── requirements.txt
 └── README.md
 ```
