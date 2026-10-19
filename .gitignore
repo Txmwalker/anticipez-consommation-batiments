@@ -17,6 +17,7 @@ env/
 *.pdf
 quiz_*.py
 fiche_revision_*.md
+guide_revision_*.html
 
 # Éditeurs / OS
 .vscode/
