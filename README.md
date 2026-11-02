@@ -28,6 +28,10 @@ La ville de Seattle vise la neutralité carbone en 2050. Les relevés de consomm
 3. **Préparation des features** (notebook 02) : retrait de 16 valeurs extrêmes (seuils de quantiles 0,5 % / 99,5 %), passage de la cible
    au log, suppression des features redondantes, séparation X / y et encodage (`OneHotEncoder`, `StandardScaler` dans un `ColumnTransformer`).
    Jeu final : 1 434 bâtiments, 19 features.
+4. **Comparaison des modèles** (notebook 02) : DummyRegressor, régression linéaire, SVR, arbre de décision, Random Forest et XGBoost,
+   évalués dans les mêmes conditions (séparation train / test 80 / 20, validation croisée à 5 plis, R², MAE, RMSE).
+5. **Optimisation et interprétation** (notebook 02) : `GridSearchCV` sur XGBoost (144 combinaisons), R² de 0,75 sur le jeu de test.
+   La surface et la famille d'usage sont les deux principaux facteurs utilisés par le modèle.
 
 ## Structure
 
@@ -62,6 +66,6 @@ Exécuter ensuite, dans l'ordre, `notebooks/01_analyse_exploratoire.ipynb` (qui 
 - [x] Analyse exploratoire
 - [x] Feature engineering
 - [x] Préparation des features
-- [ ] Comparaison des modèles
-- [ ] Optimisation et interprétation
+- [x] Comparaison des modèles
+- [x] Optimisation et interprétation
 - [ ] API et déploiement cloud
