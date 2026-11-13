@@ -8,7 +8,7 @@ Parcours d'une requête :
     1. l'utilisateur envoie la description de son bâtiment (JSON) à la route /predire ;
     2. Pydantic vérifie les données (schemas.py) : en cas d'incohérence, l'API répond 400 avec un message ;
     3. les features sont construites comme dans le notebook (features.py) ;
-    4. le modèle prédit le log de la consommation, que l'on ramène en kBtu et en kWh.
+    4. le modèle prédit le log de la consommation corrigée de la météo, que l'on ramène en kBtu et en kWh.
 """
 import bentoml
 import numpy as np
@@ -23,7 +23,7 @@ KBTU_VERS_KWH = 0.29307  # 1 kBtu ≈ 0,293 kWh
 # @bentoml.service transforme la classe en service web. timeout : une requête est abandonnée après 30 secondes.
 @bentoml.service(name="consommation_batiments", traffic={"timeout": 30})
 class PredictionConsommation:
-    """Prédit la consommation annuelle d'énergie d'un bâtiment à partir de ses caractéristiques."""
+    """Prédit la consommation annuelle d'énergie (corrigée de la météo) d'un bâtiment à partir de ses caractéristiques."""
 
     # Référence au modèle sauvegardé par le notebook 02 dans le « model store » de BentoML.
     # « latest » = la dernière version sauvegardée. BentoML l'inclut aussi dans l'image Docker.

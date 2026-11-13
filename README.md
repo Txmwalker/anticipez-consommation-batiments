@@ -3,7 +3,7 @@
 Projet OpenClassrooms — parcours Data Engineer.
 
 La ville de Seattle vise la neutralité carbone en 2050. Les relevés de consommation des bâtiments étant coûteux, l'objectif est de
-**prédire la consommation totale d'énergie** (`SiteEnergyUse(kBtu)`) des bâtiments **non destinés à l'habitation** à partir de leurs
+**prédire la consommation totale d'énergie, corrigée de la météo** (`SiteEnergyUseWN(kBtu)`), des bâtiments **non destinés à l'habitation** à partir de leurs
 **données structurelles** (taille, usage, année de construction, localisation…).
 
 - **Partie 1** : analyse exploratoire, feature engineering, comparaison de modèles supervisés, optimisation et interprétation.
@@ -15,8 +15,8 @@ La ville de Seattle vise la neutralité carbone en 2050. Les relevés de consomm
 ([source](https://data.seattle.gov/Built-Environment/Building-Energy-Benchmarking-Data-2015-Present/teqw-tu6e/about_data)) :
 3 376 bâtiments, 46 colonnes.
 
-`data/building_consumption_clean.csv` — jeu nettoyé exporté par le notebook 01 : 1 454 bâtiments non résidentiels
-(relevés conformes, valeurs cohérentes), 12 colonnes structurelles + la cible. Les colonnes issues du relevé de consommation
+`data/building_consumption_clean.csv` — jeu nettoyé exporté par le notebook 01 : 1 445 bâtiments non résidentiels
+(relevés conformes, consommation corrigée de la météo exploitable, valeurs cohérentes), 12 colonnes structurelles + la cible. Les colonnes issues du relevé de consommation
 (fuite de données) sont exclues ; la présence de gaz et de vapeur est conservée sous forme d'indicateurs 0 / 1.
 
 ## Démarche
@@ -25,13 +25,15 @@ La ville de Seattle vise la neutralité carbone en 2050. Les relevés de consomm
    incohérences (journal des filtrages), étude des liens entre consommation, surface, usage, âge et localisation, sélection des colonnes.
 2. **Feature engineering** (notebook 02) : 20 features couvrant la temporalité, la structure, les usages, les sources d'énergie
    et la localisation, toutes calculables sans relevé de consommation.
-3. **Préparation des features** (notebook 02) : retrait de 16 valeurs extrêmes (seuils de quantiles 0,5 % / 99,5 %), passage de la cible
-   au log, suppression des features redondantes, séparation X / y et encodage (`OneHotEncoder`, `StandardScaler` dans un `ColumnTransformer`).
-   Jeu final : 1 434 bâtiments, 19 features.
+3. **Préparation des features** (notebook 02) : séparation train / test (80 / 20) **avant** tout calcul utilisant la cible, retrait de
+   12 valeurs extrêmes du seul jeu d'entraînement (seuils de quantiles 0,5 % / 99,5 % calculés sur l'entraînement, test intact),
+   passage de la cible au log, suppression des features redondantes et encodage (`OneHotEncoder`, `StandardScaler` dans un `ColumnTransformer`).
+   Jeux finaux : 1 140 bâtiments d'entraînement, 289 de test, 19 features.
 4. **Comparaison des modèles** (notebook 02) : DummyRegressor, régression linéaire, SVR, arbre de décision, Random Forest et XGBoost,
-   évalués dans les mêmes conditions (séparation train / test 80 / 20, validation croisée à 5 plis, R², MAE, RMSE).
-5. **Optimisation et interprétation** (notebook 02) : `GridSearchCV` sur XGBoost (144 combinaisons), R² de 0,75 sur le jeu de test.
-   La surface et la famille d'usage sont les deux principaux facteurs utilisés par le modèle.
+   évalués dans les mêmes conditions (validation croisée à 5 plis sur l'entraînement ; R², MAE et RMSE sur le log, erreur relative médiane en kBtu).
+5. **Optimisation et interprétation** (notebook 02) : `GridSearchCV` sur XGBoost (144 combinaisons). Sur le jeu de test : R² de 0,72
+   (calculé sur le log de la consommation) et erreur relative médiane de 35 %. La surface et la famille d'usage sont les deux principaux
+   facteurs utilisés par le modèle.
 
 ## Structure
 
