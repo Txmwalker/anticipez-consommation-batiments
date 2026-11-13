@@ -147,7 +147,7 @@ class Batiment(BaseModel):
 
 
 class Prediction(BaseModel):
-    """Ce que l'API renvoie : la consommation d'énergie annuelle estimée pour le bâtiment."""
+    """Ce que l'API renvoie : la consommation d'énergie annuelle estimée pour le bâtiment, corrigée de la météo."""
 
-    consommation_kbtu: float = Field(description="Consommation annuelle estimée, en kBtu")
-    consommation_kwh: float = Field(description="Consommation annuelle estimée, en kWh (1 kBtu ≈ 0,293 kWh)")
+    consommation_kbtu: float = Field(description="Consommation annuelle estimée, corrigée de la météo (année type), en kBtu")
+    consommation_kwh: float = Field(description="Consommation annuelle estimée, corrigée de la météo (année type), en kWh (1 kBtu ≈ 0,293 kWh)")
