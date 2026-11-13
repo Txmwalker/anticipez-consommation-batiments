@@ -1,0 +1,31 @@
+# Construction du Bento (API + modèle + dépendances), puis de son image Docker :
+#   bentoml build
+#   bentoml containerize consommation_batiments:latest
+service: "api.service:PredictionConsommation"
+labels:
+  projet: anticipez-consommation-batiments
+  auteur: tom-walker
+description: "API de prédiction de la consommation d'énergie des bâtiments non résidentiels de Seattle"
+
+# Uniquement le code nécessaire à l'API, pour une image légère
+include:
+  - "api/__init__.py"
+  - "api/features.py"
+  - "api/schemas.py"
+  - "api/service.py"
+
+# Modèle sauvegardé par le notebook 02_modelisation.ipynb
+models:
+  - "consommation_batiments:latest"
+
+# Dépendances de production uniquement, aux versions utilisées pour entraîner le modèle
+# (xgboost-cpu : même bibliothèque qu'xgboost, sans les composants GPU, bien plus légère sous Linux)
+python:
+  packages:
+    - "numpy==2.3.5"
+    - "pandas==2.3.3"
+    - "scikit-learn==1.7.2"
+    - "xgboost-cpu==3.4.1"
+
+docker:
+  python_version: "3.13"

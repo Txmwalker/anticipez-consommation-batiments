@@ -19,6 +19,9 @@ quiz_*.py
 fiche_revision_*.md
 guide_revision_*.html
 
+# Présentation de soutenance (gardée en local)
+*.pptx
+
 # Éditeurs / OS
 .vscode/
 .idea/
